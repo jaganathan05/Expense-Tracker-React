@@ -1,6 +1,7 @@
 import React, {  useRef, useState } from "react";
 import { Button, FloatingLabel, Form } from "react-bootstrap";
 import './Signup.css'
+import { Link } from "react-router-dom/cjs/react-router-dom.min";
 
 function Signup (){
     const [isvalidated,setvalidated]=useState(false)
@@ -87,7 +88,8 @@ function Signup (){
                 <Form.Control type='password' placeholder='dsa' ref={conformpasswordref} ></Form.Control>
             </FloatingLabel>
             <Button className="btn-dark btn-outline-info" onClick={submitformHandler}>Submit</Button>
-
+            <br></br>
+            <Link className='link' to='/login'>If You Already Have An Account Login !</Link>
         </Form>
     </div>
 

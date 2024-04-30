@@ -1,4 +1,4 @@
-.signup-box{
+.login-box{
 
     border: 2px solid rgb(255, 253, 253);
     border-radius: 10px;
@@ -9,12 +9,12 @@
 
 }
 
-.signup-box h2{
+.login-box h2{
     color:yellow;
 }
 
 
-.signup-container{
+.login-container{
     display: flex;
     justify-content: center;
     margin: 60px;
@@ -27,12 +27,4 @@ body{
 
 .input.invalid{
     background-color: rgb(243, 26, 55);
-}
-
-.link{
-    margin-top: 10px;
-    text-align: center;
-    text-decoration: none;
-    color: white;
-    font-size: 20px;
 }
