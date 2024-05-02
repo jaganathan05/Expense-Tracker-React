@@ -5,6 +5,7 @@ import ExpenseForm from '../ExpenseForm/ExpenseForm';
 import { Button } from 'react-bootstrap';
 
 function Home (){
+    const [expenses,setexpenses]= useState(null)
     const [showform,setshowform]= useState(false)
 
     const AddExpense = ()=>{
@@ -16,6 +17,12 @@ function Home (){
     }
     useEffect(() => {
         document.body.style.backgroundImage = 'none'; 
+        const fetchdata = async()=>{
+            const response = await fetch('https://react-api-test-d5c70-default-rtdb.firebaseio.com/Expense.json')
+            const responsedata = await response.json()
+            setexpenses(Object.values(responsedata))
+        }
+        fetchdata()
         return () => {
            
             document.body.style.backgroundImage = 'radial-gradient( circle 382px at 50% 50.2%,  rgba(73,76,212,1) 0.1%, rgba(3,1,50,1) 100.2% )';
@@ -27,6 +34,9 @@ return <div>
     <p>Your profile is incomplete <Link to='/profile'>Complete</Link></p>
     <Button onClick={AddExpense}>Add Expense</Button>
     {showform && <ExpenseForm  show={showform} hideform={hideFormHandler} />}
+    {expenses ? (<ul>{expenses.map(expense=>{
+return <li>{expense.Amount} -- {expense.Catagory} -- {expense.Description}</li>
+    })} </ul>) : ''}
 
 </div>
 

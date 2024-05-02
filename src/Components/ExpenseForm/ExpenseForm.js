@@ -15,19 +15,47 @@ function ExpenseForm (props){
         props.hideform()
     }
 
-    const Expenseformhandler = async (event)=>{
-        event.preventDefault()
-        const data = {
-            Catagory : Catagoryref.current.value,
-            Amount: Amountref.current.value,
-            Description: DescRef.current.value
+    const Expenseformhandler = async (event) => {
+        event.preventDefault();
+        const EnteredCatagory = Catagoryref.current.value;
+        const EnteredAmount = Amountref.current.value;
+        const EnteredDesc = DescRef.current.value;
+    
+        if (EnteredAmount && EnteredDesc.trim().length > 2 && EnteredCatagory) {
+            const data = {
+                id: Math.random(),
+                Catagory: EnteredCatagory,
+                Amount: EnteredAmount,
+                Description: EnteredDesc
+            };
+    
+            try {
+                const response = await fetch('https://react-api-test-d5c70-default-rtdb.firebaseio.com/Expense.json', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+    
+                if (!response.ok) {
+                    throw new Error('Failed to post data to the server');
+                }
+    
+                const responseData = await response.json();
+                console.log(responseData);
+                alert('Expense Added');
+                setshow(false);
+                props.hideform();
+            } catch (error) {
+                console.error('Error posting data:', error);
+                alert('Failed to add expense. Please try again later.');
+            }
+        } else {
+            alert('Fill Expense Details Correctly');
         }
-
-        console.log(data)
-            setshow(false)
-            props.hideform()
-        
-    }
+    };
+    
 
 
     return <Model className={classes['modal']}>
