@@ -1,0 +1,22 @@
+.ProfileForm-Box{
+
+    border: 2px solid rgb(0, 0, 0);
+    border-radius: 10px;
+    width: 400px;
+    height : auto;
+    padding: 20px;
+    background-color: rgba(68, 68, 68, 0.973);
+
+}
+
+.ProfileForm-Box h2{
+    color:rgb(22, 142, 255);
+}
+
+
+.ProfileForm-Container{
+    display: flex;
+    justify-content: center;
+    margin: 60px;
+    
+}

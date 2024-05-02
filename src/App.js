@@ -3,6 +3,8 @@ import { Route } from 'react-router-dom/cjs/react-router-dom.min';
 import './App.css';
 import Signup from './Components/Authentication/Signup';
 import Login from './Components/Authentication/Login';
+import Home from './Components/Home/home'
+import Profile from './Components/Profile/Profile';
 
 
 function App() {
@@ -15,7 +17,10 @@ function App() {
         <Login/>
       </Route>
       <Route path='/Home' >
-<h2>Welcome To Home Page</h2>
+        <Home/>
+      </Route>
+      <Route path='/profile'>
+        <Profile/>
       </Route>
       
     </div>

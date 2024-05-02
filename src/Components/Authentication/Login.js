@@ -1,8 +1,7 @@
 import React, {  useRef, useState } from "react";
 import { Button, FloatingLabel, Form } from "react-bootstrap";
 import { Link, useHistory } from "react-router-dom/cjs/react-router-dom.min";
-import './Login.css'
-
+import classes from './Login.module.css'
 function Login (){
     const [isvalidated,setvalidated]=useState(false)
     const emailref = useRef()
@@ -51,6 +50,9 @@ function Login (){
 
           if(response.ok){
             console.log('Login successfull')
+            const responsedata =await response.json()
+            console.log(responsedata)
+            localStorage.setItem('token',responsedata.idToken)
             history.push('/Home')
           }
           else {
@@ -68,9 +70,9 @@ function Login (){
 
    
 
-    return <div className="login-container">
+    return <div className={classes["login-container"]}>
 
-        <Form validated={isvalidated} className='login-box'>
+        <Form validated={isvalidated} className={classes['login-box']}>
             <h2>Login</h2>
             <FloatingLabel  controlId="email" label='Email' className="mb-3"  >
                 <Form.Control type='email' placeholder='dsa' required ref={emailref} ></Form.Control >
@@ -81,7 +83,7 @@ function Login (){
             <Button className="btn-dark btn-outline-info" onClick={submitformHandler}>Submit</Button>
             <br>
             </br>
-            <Link className='link' to='/signup'>If You Don't Have An Account Signup !</Link>
+            <Link className={classes['link']} to='/signup'>If You Don't Have An Account Signup !</Link>
 
         </Form>
     </div>

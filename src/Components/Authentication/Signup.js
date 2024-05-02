@@ -1,6 +1,6 @@
 import React, {  useRef, useState } from "react";
 import { Button, FloatingLabel, Form } from "react-bootstrap";
-import './Signup.css'
+import classes from './Signup.module.css'
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
 
 function Signup (){
@@ -74,9 +74,9 @@ function Signup (){
 
    
 
-    return <div className="signup-container">
+    return <div className={classes["signup-container"]}>
 
-        <Form validated={isvalidated} className='signup-box'>
+        <Form validated={isvalidated} className={classes['signup-box']}>
             <h2>Signup</h2>
             <FloatingLabel  controlId="email" label='Email' className="mb-3"  >
                 <Form.Control type='email' placeholder='dsa' required ref={emailref} ></Form.Control >
@@ -89,7 +89,7 @@ function Signup (){
             </FloatingLabel>
             <Button className="btn-dark btn-outline-info" onClick={submitformHandler}>Submit</Button>
             <br></br>
-            <Link className='link' to='/login'>If You Already Have An Account Login !</Link>
+            <Link className={classes['link']} to='/login'>If You Already Have An Account Login !</Link>
         </Form>
     </div>
 
