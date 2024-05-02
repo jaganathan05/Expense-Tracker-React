@@ -5,6 +5,7 @@ import Signup from './Components/Authentication/Signup';
 import Login from './Components/Authentication/Login';
 import Home from './Components/Home/home'
 import Profile from './Components/Profile/Profile';
+import ForgetPassForm from './Components/Authentication/ForgetPassword';
 
 
 function App() {
@@ -21,6 +22,9 @@ function App() {
       </Route>
       <Route path='/profile'>
         <Profile/>
+      </Route>
+      <Route path='/forgetpassword'>
+        <ForgetPassForm/> 
       </Route>
       
     </div>

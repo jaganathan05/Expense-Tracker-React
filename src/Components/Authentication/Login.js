@@ -80,6 +80,8 @@ function Login (){
             <FloatingLabel controlId="password" label='Password' className="mb-3"  >
                 <Form.Control type='password' placeholder='dsa' ref={passwordref} ></Form.Control>
             </FloatingLabel>
+            <Link className={classes['link']} to='/forgetpassword'>Forget Password!</Link>
+            <br></br>
             <Button className="btn-dark btn-outline-info" onClick={submitformHandler}>Submit</Button>
             <br>
             </br>

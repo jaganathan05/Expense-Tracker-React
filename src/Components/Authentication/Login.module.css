@@ -35,3 +35,15 @@ body{
     color: white;
     font-size: 20px;
 }
+
+.link1{
+    margin-top: 10px;
+    text-align: center;
+    text-decoration: none;
+    color: rgb(253, 10, 10);
+    font-size: 20px;
+}
+.login-box p{
+    color: yellow;
+    font-size: 20px;
+}
