@@ -1,11 +1,24 @@
-import React ,{useEffect, useRef}from "react";
+import React ,{useEffect, useRef,useState}from "react";
 import { FloatingLabel, Form ,Button } from "react-bootstrap";
 import classes from './Profile.module.css'
 import {Person , Image } from 'react-bootstrap-icons'
 
 function Profile (){
+    const [user, setUser] = useState(null);
     useEffect(() => {
         document.body.style.backgroundImage = 'none'; 
+        const fetchdata =async() => {
+           const response =  await fetch('https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=AIzaSyDAzYMyrP5pUcCeJ9QKrDnuXPIreusRbFw',{
+            method:'POST',
+            body:JSON.stringify({
+                idToken : localStorage.getItem('token')
+            })
+           })
+           const data = await response.json()
+           console.log(data)
+           setUser(data.users[0])
+        } 
+        fetchdata()
         return () => {
            
             document.body.style.backgroundImage = 'radial-gradient( circle 382px at 50% 50.2%,  rgba(73,76,212,1) 0.1%, rgba(3,1,50,1) 100.2% )';
@@ -14,6 +27,7 @@ function Profile (){
 
     const fullnameref = useRef();
     const ImageurlRef = useRef();
+    console.log(user)
 
     const submitformhandler =async (event)=>{
         event.preventDefault()
@@ -53,12 +67,13 @@ function Profile (){
     
         <Form className={classes['ProfileForm-Box']} >
             <h2>Complete Your Profile</h2>
-            <FloatingLabel  controlId="FullName" label={<span><Person/> FullName</span>} className="mb-3"  >
-                <Form.Control type='text' placeholder='dsa' required ref={fullnameref} ></Form.Control >
+            <FloatingLabel controlId="FullName" label={<span><Person /> FullName</span>} className="mb-3">
+                <Form.Control type='text' placeholder='dsa' required ref={fullnameref} defaultValue={user ? user.displayName : ''} />
             </FloatingLabel>
-            <FloatingLabel controlId="ImageUrl" label={<span><Image/> Image Url</span>} className="mb-3"  >
-                <Form.Control type='text' placeholder='dsa' ref={ImageurlRef} required></Form.Control>
+            <FloatingLabel controlId="ImageUrl" label={<span><Image /> Image Url</span>} className="mb-3">
+                <Form.Control type='text' placeholder='dsa' ref={ImageurlRef} required defaultValue={user ? user.photoUrl : ''} />
             </FloatingLabel>
+
             <Button  className="btn-dark btn-outline-info" onClick={submitformhandler} >Submit</Button>
 
         </Form>
