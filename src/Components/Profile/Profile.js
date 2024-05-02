@@ -1,9 +1,11 @@
 import React ,{useEffect, useRef,useState}from "react";
 import { FloatingLabel, Form ,Button } from "react-bootstrap";
 import classes from './Profile.module.css'
-import {Person , Image } from 'react-bootstrap-icons'
+import {Person , Image, Lock } from 'react-bootstrap-icons'
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 function Profile (){
+    const history = useHistory()
     const [user, setUser] = useState(null);
     useEffect(() => {
         document.body.style.backgroundImage = 'none'; 
@@ -82,10 +84,17 @@ function Profile (){
         }
     }
 
+    const logouthandler = ()=>{
+localStorage.removeItem('token')
+history.push('/login')
 
-    return <div className={classes["ProfileForm-Container"]}> 
-    
-        <Form className={classes['ProfileForm-Box']} >
+    }
+
+
+    return <div > 
+    <Button className={classes['logoutbtn']} onClick={logouthandler}><Lock/>  LOGOUT</Button>
+    <div className={classes["ProfileForm-Container"]}>
+    <Form className={classes['ProfileForm-Box']} >
             <h2>Complete Your Profile</h2>
             <FloatingLabel controlId="FullName" label={<span><Person /> FullName</span>} className="mb-3">
                 <Form.Control type='text' placeholder='dsa' required ref={fullnameref} defaultValue={user ? user.displayName : ''} />
@@ -100,6 +109,9 @@ function Profile (){
 ) : ''}
         </Form>
 
+
+    </div>
+    
         
     </div>
 

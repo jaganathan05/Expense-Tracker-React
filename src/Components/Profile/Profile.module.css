@@ -17,9 +17,12 @@
 .ProfileForm-Container{
     display: flex;
     justify-content: center;
-    margin: 60px;
+    margin: 50px;
     
 }
 .verifybtn {
     margin-top:10px;
+}
+.logoutbtn{
+margin-left: 80%;
 }
