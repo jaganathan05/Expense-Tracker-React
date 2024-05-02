@@ -62,6 +62,26 @@ function Profile (){
         
     }
 
+    const verifyEmail = async()=>{
+        const data = {
+            requestType : "VERIFY_EMAIL" ,
+            idToken : localStorage.getItem('token')
+        }
+
+        const response = await fetch ('https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=AIzaSyDAzYMyrP5pUcCeJ9QKrDnuXPIreusRbFw',{
+            method: 'POST',
+            headers:{
+                'Content-Type':'application/json'
+            },
+            body:JSON.stringify(data)
+        })
+
+        if(response.ok){
+            const responsedata = await response.json()
+            console.log(responsedata)
+        }
+    }
+
 
     return <div className={classes["ProfileForm-Container"]}> 
     
@@ -75,8 +95,12 @@ function Profile (){
             </FloatingLabel>
 
             <Button  className="btn-dark btn-outline-info" onClick={submitformhandler} >Submit</Button>
-
+            <br></br>
+            {user ? ( !user.emailVerified &&  <Button className={classes["verifybtn"]} onClick={verifyEmail}>Email Verification </Button>
+) : ''}
         </Form>
+
+        
     </div>
 
 }
