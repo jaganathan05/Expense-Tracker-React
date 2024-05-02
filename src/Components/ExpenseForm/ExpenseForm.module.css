@@ -1,0 +1,16 @@
+.modal {
+    background-color: rgb(44, 40, 40) ;
+}
+.lable{
+    color: white;
+}
+.option {
+    color: rgb(243, 223, 41);
+    background-color: blue;
+    font-weight: bold;
+}
+
+.option:active {
+    color: rgb(247, 6, 6) !important;
+    background-color: blue !important;
+}

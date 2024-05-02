@@ -1,8 +1,19 @@
-import React,{useEffect} from 'react';
+import React,{useEffect,useState} from 'react';
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 import './Home.module.css'
+import ExpenseForm from '../ExpenseForm/ExpenseForm';
+import { Button } from 'react-bootstrap';
 
 function Home (){
+    const [showform,setshowform]= useState(false)
+
+    const AddExpense = ()=>{
+        setshowform(true)
+    }
+
+    const hideFormHandler = () => {
+        setshowform(false);
+    }
     useEffect(() => {
         document.body.style.backgroundImage = 'none'; 
         return () => {
@@ -14,6 +25,9 @@ function Home (){
 return <div>
     <h2>Welcome To Expense Page</h2>
     <p>Your profile is incomplete <Link to='/profile'>Complete</Link></p>
+    <Button onClick={AddExpense}>Add Expense</Button>
+    {showform && <ExpenseForm  show={showform} hideform={hideFormHandler} />}
+
 </div>
 
 }
