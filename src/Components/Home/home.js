@@ -3,8 +3,11 @@ import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 import './Home.module.css'
 import ExpenseForm from '../ExpenseForm/ExpenseForm';
 import { Button } from 'react-bootstrap';
+import ExpenseList from './ExpenseList';
 
 function Home (){
+    const [editobj,seteditobj]=useState(null)
+    const [reload,setreload]=useState(false)
     const [expenses,setexpenses]= useState(null)
     const [showform,setshowform]= useState(false)
 
@@ -14,29 +17,43 @@ function Home (){
 
     const hideFormHandler = () => {
         setshowform(false);
+        seteditobj(null)
+    }
+
+    const reloadHandler = ()=>{
+        setreload(true)
+    }
+
+    const editexpensehandler = (obj)=>{
+            setshowform(true)
+            seteditobj(obj)
     }
     useEffect(() => {
         document.body.style.backgroundImage = 'none'; 
         const fetchdata = async()=>{
             const response = await fetch('https://react-api-test-d5c70-default-rtdb.firebaseio.com/Expense.json')
             const responsedata = await response.json()
-            setexpenses(Object.values(responsedata))
+            const expense = Object.entries(responsedata).map(([key, value]) => ({
+                key,
+                value,
+              }));
+
+            setexpenses(expense)
+            setreload(false)
         }
         fetchdata()
         return () => {
            
             document.body.style.backgroundImage = 'radial-gradient( circle 382px at 50% 50.2%,  rgba(73,76,212,1) 0.1%, rgba(3,1,50,1) 100.2% )';
         };
-    }, []);
+    }, [reload]);
 
 return <div>
     <h2>Welcome To Expense Page</h2>
     <p>Your profile is incomplete <Link to='/profile'>Complete</Link></p>
-    <Button onClick={AddExpense}>Add Expense</Button>
-    {showform && <ExpenseForm  show={showform} hideform={hideFormHandler} />}
-    {expenses ? (<ul>{expenses.map(expense=>{
-return <li>{expense.Amount} -- {expense.Catagory} -- {expense.Description}</li>
-    })} </ul>) : ''}
+    <Button onClick={AddExpense}  className='m-2' >Add Expense</Button>
+    {showform && <ExpenseForm  show={showform} value={editobj} hideform={hideFormHandler} reload={reloadHandler} />}
+    {expenses ? <ExpenseList expense={expenses} reload={reloadHandler} edit={editexpensehandler}/> : ''}
 
 </div>
 
