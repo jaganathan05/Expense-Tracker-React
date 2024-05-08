@@ -2,7 +2,10 @@ import React, {  useRef, useState } from "react";
 import { Button, FloatingLabel, Form } from "react-bootstrap";
 import { Link, useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import classes from './Login.module.css'
+import { Authactions } from "../../Store/Slices/Auth";
+import { useDispatch } from "react-redux";
 function Login (){
+    const dispatch = useDispatch()
     const [isvalidated,setvalidated]=useState(false)
     const emailref = useRef()
     const passwordref = useRef()
@@ -50,9 +53,11 @@ function Login (){
 
           if(response.ok){
             console.log('Login successfull')
+            
             const responsedata =await response.json()
             console.log(responsedata)
             localStorage.setItem('token',responsedata.idToken)
+            dispatch(Authactions.login(responsedata.idToken))
             history.push('/Home')
           }
           else {

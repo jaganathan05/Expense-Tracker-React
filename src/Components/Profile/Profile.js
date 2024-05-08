@@ -3,9 +3,12 @@ import { FloatingLabel, Form ,Button } from "react-bootstrap";
 import classes from './Profile.module.css'
 import {Person , Image, Lock } from 'react-bootstrap-icons'
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { useDispatch } from "react-redux";
+import { Authactions } from "../../Store/Slices/Auth";
 
 function Profile (){
     const history = useHistory()
+    const dispatch = useDispatch()
     const [user, setUser] = useState(null);
     useEffect(() => {
         document.body.style.backgroundImage = 'none'; 
@@ -86,6 +89,8 @@ function Profile (){
 
     const logouthandler = ()=>{
 localStorage.removeItem('token')
+dispatch(Authactions.logout())
+
 history.push('/login')
 
     }
