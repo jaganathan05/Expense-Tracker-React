@@ -6,18 +6,16 @@ const ExpenseSlice = createSlice({
     name: 'Expense',
     initialState ,
     reducers : {
+        addpremium (state,action){
+            state.premium = true
+                    },
         InitialExpenses(state,action ){
        state.Expenses = action.payload 
        state.TotalAmount = action.payload.reduce((total, expense) => {
         return total + Number(expense.value.Amount);
       }, 0);
-
-       console.log(state.Expenses)
-       console.log(state.TotalAmount)
         }} ,
-        addExpense (state,action){
-
-        }
+        
 
 })
 console.log(initialState)

@@ -2,14 +2,16 @@ import React,{useEffect,useState} from 'react';
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 import './Home.module.css'
 import ExpenseForm from '../ExpenseForm/ExpenseForm';
-import { Button } from 'react-bootstrap';
+import { Button,FormCheck } from 'react-bootstrap';
 import ExpenseList from './ExpenseList';
 import { useDispatch, useSelector} from 'react-redux';
-import { Expenseactions } from '../../Store/Slices/Expense';
+import {Expenseactions} from '../../Store/Slices/Expense'
+import { Themeactions } from '../../Store/Slices/Theme';
 
 function Home (){ 
     const TotalAmount = useSelector(state => state.Expense.TotalAmount);
     const expenseSelector = useSelector(state => state.Expense.Expenses); 
+    const premium = useSelector(state => state.Expense.premium);
     
     const dispatch = useDispatch()
     const [editobj,seteditobj]=useState(null)
@@ -34,6 +36,38 @@ function Home (){
     const editexpensehandler = (obj)=>{
             setshowform(true)
             seteditobj(obj)
+    }
+
+    const activatepremium = ()=>{
+        dispatch(Expenseactions.addpremium())
+        console.log('premium')
+    }
+
+    const themechange = ()=>{
+        dispatch(Themeactions.changeTheme())
+    }
+
+    const downloadcsv = (event)=>{ 
+        const data = [
+            [' Amount', 'Description ' , 'Catagory'] , ...expenses.map(expense=>{
+                return [expense.value.Amount, expense.value.Description , expense.value.Catagory]
+            })
+
+            
+    ]
+        console.log(data)
+    function makecsv(rows){
+        return rows.map(r=> r.join(",")).join("\n")
+    }
+    const blob = new Blob([makecsv(data)], { type: 'text/csv' });
+    const url = URL.createObjectURL(blob);
+
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', 'expenses.csv');
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
     }
     useEffect(() => {
         document.body.style.backgroundImage = 'none'; 
@@ -65,10 +99,12 @@ setexpenses(expenseSelector)
     },[expenseSelector])
 
 return <div>
-    <h2>Welcome To Expense Page</h2>
+    <h2>Welcome To Expense Page</h2> 
+    {premium && <FormCheck type='switch' onChange={themechange}></FormCheck>}
     <p>Your profile is incomplete <Link to='/profile'>Complete</Link></p>
     <Button onClick={AddExpense}  className='m-2' >Add Expense</Button>
-    { TotalAmount>=10000  && <Button>Activate Premium</Button>}
+    {premium && <Button onClick={downloadcsv}>Download Expenses</Button>}
+    { TotalAmount>=10000  && !premium && <Button onClick={activatepremium}>Activate Premium</Button>}
     {showform && <ExpenseForm  show={showform} value={editobj} hideform={hideFormHandler} reload={reloadHandler} />}
     {expenses ? <ExpenseList expense={expenses} reload={reloadHandler} edit={editexpensehandler}/> : ''}
 
