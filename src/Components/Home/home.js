@@ -104,7 +104,7 @@ return <div>
     <p>Your profile is incomplete <Link to='/profile'>Complete</Link></p>
     <Button onClick={AddExpense}  className='m-2' >Add Expense</Button>
     {premium && <Button onClick={downloadcsv}>Download Expenses</Button>}
-    { TotalAmount>=10000  && !premium && <Button onClick={activatepremium}>Activate Premium</Button>}
+    { TotalAmount>=10000  && !premium && <Button  onClick={activatepremium}>Activate Premium</Button>}
     {showform && <ExpenseForm  show={showform} value={editobj} hideform={hideFormHandler} reload={reloadHandler} />}
     {expenses ? <ExpenseList expense={expenses} reload={reloadHandler} edit={editexpensehandler}/> : ''}
 
